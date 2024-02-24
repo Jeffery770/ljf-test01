@@ -1,9 +1,19 @@
 steps:
+  - name: 'us-west2-docker.pkg.dev/$PROJECT_ID/quickstart-docker-repo/ljf-test01-image:$_BUILDVER'
+      dir: '${_WORKDIR}'
+      entrypoint: mvn
+      args: [ '-f', 'pom.xml', 'clean', 'install', '-Dmaven.test.skip=true' ]
+
   - name: 'gcr.io/cloud-builders/docker'
-    script: |
-      docker build -t us-west2-docker.pkg.dev/$PROJECT_ID/quickstart-docker-repo/ljf-test01-image:v1 .
-    automapSubstitutions: true
-images:
-  - 'us-west2-docker.pkg.dev/omnitrack-test-359902/quickstart-docker-repo/ljf-test01-image:v1'
+      args:
+        - 'build'
+        - '-t'
+        - 'us-west2-docker.pkg.dev/$PROJECT_ID/quickstart-docker-repo/ljf-test01-image:$_BUILDVER'
+        - '${_WORKDIR}'
+env:
+  - 'CLOUDSDK_COMPUTE_REGION=us-west2'
+substitutions:
+  _WORKDIR: "."
+  _BUILDVER: lastest
 options:
   logging: CLOUD_LOGGING_ONLY
