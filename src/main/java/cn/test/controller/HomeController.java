@@ -6,15 +6,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @author lujingfeng
- * @date 2024/2/24 10:27 上午
+ * @date 2024/2/24 5:40 下午
  */
 @Controller
-@RequestMapping(value = "/index")
-public class IndexController {
-
+public class HomeController {
     @ResponseBody
-    @RequestMapping("/hello")
-    public String hello(){
-        return "hello";
+    @RequestMapping("/")
+    public String home() {
+        return "welcome";
     }
 }
